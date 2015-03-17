@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
             ]
           }
         }]
-      },
+      }
   #   :nginx => {
   #   :dir => "/etc/nginx",
   #   :init_style => "init",

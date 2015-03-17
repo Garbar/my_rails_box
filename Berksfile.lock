@@ -10,8 +10,8 @@ DEPENDENCIES
   preinstall
     path: site-cookbooks/preinstall
   rbenv
-    git: https://github.com/RayMangum/chef-rbenv
-    revision: bd518e992ebcc0a5280ef6a4e9ef5128554b27bf
+    git: https://github.com/fnichol/chef-rbenv
+    revision: 0a3018634bafe58ad21c6ee271af015220e444b9
   ruby_build
 
 GRAPH

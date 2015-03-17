@@ -10,6 +10,6 @@ run_list(
   # "recipe[nginx::passenger]",
   # "recipe[nginx::source]",
   "recipe[mysql::server]",
-  "recipe[mysql::client]"
+  "recipe[mysql::client]",
   "recipe[postinstall]"
 )
