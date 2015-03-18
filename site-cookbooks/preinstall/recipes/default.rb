@@ -11,6 +11,54 @@ node.default[:packages].each do |p|
     action :install
   end
 end
+# Deployer user, sudoer and with known RSA keys
+user_account 'deployer' do
+  create_group true
+end
+group "sudo" do
+  action :modify
+  members "deployer"
+  append true
+end
+cookbook_file "id_rsa" do
+  source "id_rsa"
+  path "/home/deployer/.ssh/id_rsa"
+  group "deployer"
+  owner "deployer"
+  mode 0600
+  action :create_if_missing
+end
+cookbook_file "id_rsa.pub" do
+  source "id_rsa.pub"
+  path "/home/deployer/.ssh/id_rsa.pub"
+  group "deployer"
+  owner "deployer"
+  mode 0644
+  action :create_if_missing
+end
+
+# Allow sudo command without password for sudoers
+cookbook_file "sudo_without_password" do
+  source "sudo_without_password"
+  path "/etc/sudoers.d/sudo_without_password"
+  group "root"
+  owner "root"
+  mode 0440
+  action :create_if_missing
+end
+
+# Authorize yourself to connect to server
+cookbook_file "authorized_keys" do
+  source "authorized_keys"
+  path "/home/deployer/.ssh/authorized_keys"
+  group "deployer"
+  owner "deployer"
+  mode 0600
+  action :create
+end
+
+# Add Github as known host
+ssh_known_hosts_entry 'github.com'
 
 include_recipe "git"
 # for each listed user
