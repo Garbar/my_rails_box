@@ -60,6 +60,5 @@ Vagrant.configure("2") do |config|
   #           :root => "/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini"
   #       }
   # },
-      }
   end
 end

@@ -7,4 +7,6 @@ long_description 'Installs/Configures preinstall'
 version          '0.1.0'
 
 depends 'git'
+depends 'user'
+depends 'ssh_known_hosts'
 supports 'ubuntu'

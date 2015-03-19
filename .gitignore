@@ -1,2 +1,11 @@
-/cookbooks/
-/.vagrant/
+.vagrant
+/cookbooks
+
+# Bundler
+bin/*
+.bundle/*
+
+.kitchen/
+.kitchen.local.yml
+/nodes/*
+!/nodes/vagrant.json

@@ -1,17 +1,6 @@
-#
-# Cookbook Name:: postinstall
-# Recipe:: default
-#
-# Copyright (C) 2015 YOUR_NAME
-#
-# All rights reserved - Do Not Redistribute
-#
-
 # include_recipe "nginx"
-
-  package 'apt-transport-https'
-
-  apt_repository 'phusionpassenger' do
+package 'apt-transport-https'
+apt_repository 'phusionpassenger' do
     uri 'https://oss-binaries.phusionpassenger.com/apt/passenger'
     distribution node['lsb']['codename']
     components %w(main)
@@ -19,12 +8,8 @@
     keyserver 'keyserver.ubuntu.com'
     key '561F9B9CAC40B2F7'
   end
-  package 'nginx-full'
-  package 'passenger'
-
-# link nginx_var_log_path do
-#   to File.join(node['nginx']['path'], 'logs')
-# end
+package 'nginx-full'
+package 'passenger'
 
 directory File.join(node['nginx']['path'], 'sites-available') do
   mode        '0755'
@@ -33,6 +18,7 @@ end
 directory File.join(node['nginx']['path'], 'sites-enabled') do
   mode        '0755'
 end
+
 nginx_conf = File.join(node['nginx']['path'], 'nginx.conf')
 
 template nginx_conf do
@@ -66,10 +52,9 @@ service 'nginx' do
 end
 
 postgresql_connection_info = {:host => "127.0.0.1",
-                              # :port => node['postgresql']['config']['port'],
                               :username => 'postgres',
                               :password => node['postgresql']['password']['postgres']}
-# create a postgresql user but grant no privileges
+# create a postgresql user
 postgresql_database_user node["user"]["name"] do
   connection postgresql_connection_info
   password node['app']['password']

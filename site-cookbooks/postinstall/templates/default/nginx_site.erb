@@ -1,0 +1,30 @@
+server {
+# listen 80 default_server;
+# listen [::]:80 default_server ipv6only=on;
+        listen 80;
+        server_name <%= node['domain']['ip'] %>;
+        passenger_enabled on;
+        rails_env    production;
+        root         /home/<%= node['user']['name'] %>/projects/<%= node['app']['name'] %>/current/public;
+        error_page   500 502 503 504  /50x.html;
+}
+<% if !node['domain']['name'].empty? %>
+server {
+# listen 80 default_server;
+# listen [::]:80 default_server ipv6only=on;
+        listen 80;
+        server_name <%= node['domain']['name'] %>;
+## Deny illegal Host headers
+ if ($host !~* ^(<%= node['domain']['name'] %>|www.<%= node['domain']['name'] %>)$ ) { return 444; }
+
+        passenger_enabled on;
+        rails_env    production;
+        root         /home/<%= node['user']['name'] %>/projects/<%= node['app']['name'] %>/current/public;l
+        error_page   500 502 503 504  /50x.html;
+}
+
+ server {
+  server_name www.<%= node['domain']['name'] %>;
+  return 301 $scheme://<%= node['domain']['name'] %>.com$request_uri;
+ }
+<% end %>

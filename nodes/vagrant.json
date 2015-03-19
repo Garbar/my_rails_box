@@ -18,19 +18,30 @@
   // }],
 
   "rbenv": {
-    "rubies": ["2.1.2"],
-    "global": "2.1.2",
-    "gems": {
-      "2.1.2": [
-        {"name": "bundler"}
-      ]
+    "user_installs": [{
+      "user": "vagrant",
+      "rubies": ["2.1.5"],
+      "global": "2.1.5",
+      "gems": {
+        "2.1.5": [
+          {"name": "bundler"},
+          {"name": "rake"}
+        ]
+      }
+      }]
+  },
+  "postgresql": {
+    "password": {
+      "postgres": "iloverandompasswordsbutthiswilldo"
     }
   },
-    "mysql": {
-          "server_root_password": "",
-          "server_debian_password": "",
-          "server_repl_password": ""
-        },
+  // "postgresql":
+  // { "enable_pgdg_apt": true }
+    // "mysql": {
+    //       "server_root_password": "",
+    //       "server_debian_password": "",
+    //       "server_repl_password": ""
+    //     },
 
   // "nginx": {
   //   "version": "1.2.5",
@@ -74,9 +85,12 @@
   "recipe[preinstall]",
   "recipe[nodejs]",
   "recipe[ruby_build]",
-  "recipe[rbenv]",
-  "recipe[mysql::server]",
-  "recipe[mysql::client]",
-  "recipe[postinstall]"
+  "recipe[rbenv::user]",
+  "recipe[rbenv::vagrant]",
+  "recipe[postgresql::server]",
+  "recipe[postgresql::client]",
+  "recipe[database::postgresql]",
+  // "recipe[postinstall]"
+  "recipe[rails]"
   ]
 }

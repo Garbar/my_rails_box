@@ -12,27 +12,27 @@ node.default[:packages].each do |p|
   end
 end
 # Deployer user, sudoer and with known RSA keys
-user_account 'deployer' do
+user_account 'deploy' do
   create_group true
 end
 group "sudo" do
   action :modify
-  members "deployer"
+  members "deploy"
   append true
 end
 cookbook_file "id_rsa" do
   source "id_rsa"
-  path "/home/deployer/.ssh/id_rsa"
-  group "deployer"
-  owner "deployer"
+  path "/home/deploy/.ssh/id_rsa"
+  group "deploy"
+  owner "deploy"
   mode 0600
   action :create_if_missing
 end
 cookbook_file "id_rsa.pub" do
   source "id_rsa.pub"
-  path "/home/deployer/.ssh/id_rsa.pub"
-  group "deployer"
-  owner "deployer"
+  path "/home/deploy/.ssh/id_rsa.pub"
+  group "deploy"
+  owner "deploy"
   mode 0644
   action :create_if_missing
 end
@@ -50,9 +50,9 @@ end
 # Authorize yourself to connect to server
 cookbook_file "authorized_keys" do
   source "authorized_keys"
-  path "/home/deployer/.ssh/authorized_keys"
-  group "deployer"
-  owner "deployer"
+  path "/home/deploy/.ssh/authorized_keys"
+  group "deploy"
+  owner "deploy"
   mode 0600
   action :create
 end
@@ -86,6 +86,7 @@ node.default[:users].each do |user_hash|
       :theme => user_hash[:theme] || 'robbyrussell',
       :case_sensitive => user_hash[:case_sensitive] || false,
       :plugins => user_hash[:plugins] || %w(git)
+      :secret_key => node.default[:secret_key]
     })
   end
 
