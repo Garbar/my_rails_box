@@ -20,6 +20,14 @@ group "sudo" do
   members "deploy"
   append true
 end
+
+
+directory "/home/deploy/.config" do
+  owner 'deploy'
+  group 'deploy'
+  mode '0755'
+end
+
 cookbook_file "id_rsa" do
   source "id_rsa"
   path "/home/deploy/.ssh/id_rsa"
@@ -86,7 +94,6 @@ node.default[:users].each do |user_hash|
       :theme => user_hash[:theme] || 'robbyrussell',
       :case_sensitive => user_hash[:case_sensitive] || false,
       :plugins => user_hash[:plugins] || %w(git)
-      :secret_key => node.default[:secret_key]
     })
   end
 

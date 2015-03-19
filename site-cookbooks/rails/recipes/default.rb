@@ -19,17 +19,6 @@ directory File.join(node['nginx']['path'], 'sites-enabled') do
   mode        '0755'
 end
 
-nginx_conf = File.join(node['nginx']['path'], 'nginx.conf')
-
-template nginx_conf do
-  owner       'root'
-  group       'root'
-  mode        '0644'
-  source      'nginx.conf.erb'
-  variables   :passenger_root => '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini',
-              :passenger_ruby => '/home/#{node["user"]["name"]}/.rbenv/shims/ruby'
-  notifies    :reload, 'service[nginx]'
-end
 
 # Create practicingruby site config
 template "#{node["nginx"]["path"]}/sites-available/#{node["app"]["name"]}" do
@@ -38,11 +27,27 @@ template "#{node["nginx"]["path"]}/sites-available/#{node["app"]["name"]}" do
   group  "root"
   mode   "0644"
 end
-
+include_recipe "nginx"
 # Enable practicingruby site
-# nginx_site "#{node["app"]["name"]}" do
-#   enable true
-# end
+nginx_site "#{node["app"]["name"]}" do
+  enable true
+end
+
+nginx_site 'default' do
+  enable false
+end
+
+nginx_conf = File.join(node['nginx']['path'], 'nginx.conf')
+
+template nginx_conf do
+  owner       'root'
+  group       'root'
+  mode        '0644'
+  source      'nginx.conf.erb'
+  variables   :passenger_root => '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini',
+              :passenger_ruby => "/home/#{node['user']['name']}/.rbenv/shims/ruby"
+  notifies    :reload, 'service[nginx]'
+end
 
 service 'nginx' do
   supports    :status => true,

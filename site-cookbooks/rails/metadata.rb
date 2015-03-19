@@ -6,4 +6,4 @@ description      'Installs/Configures rails'
 long_description 'Installs/Configures rails'
 version          '0.1.0'
 
-# depends 'nginx'
+depends 'nginx'

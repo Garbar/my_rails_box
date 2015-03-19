@@ -1,22 +1,4 @@
 {
-  // "users": [{
-  //   "username": "deploy",
-  //   "password": "supersecret", // EDIT THIS
-  //   "gid": 4000,
-  //   "uid": 4000
-  // }],
-
-  // "postgresql": {
-  //   "password": {
-  //     "postgres": "supersecret" // EDIT THIS
-  //   }
-  // },
-
-  // "groups": [{
-  //   "name": "deploy",
-  //   "gid": 4000
-  // }],
-
   "rbenv": {
     "user_installs": [{
       "user": "vagrant",

@@ -5,8 +5,7 @@ source $HOME/.profile
 <% end %>
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
-export SECRET_KEY_BASE="<%= @secret_key %>"
-export SECRET_KEY="<%= node.default[:secret_key] %>"
+export SECRET_KEY_BASE="<%= node.default[:secret_key] %>"
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
